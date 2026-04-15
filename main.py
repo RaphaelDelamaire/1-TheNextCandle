@@ -3,15 +3,15 @@ import numpy as np
 import matplotlib.pyplot as plt
 import sklearn
 
-from src.get_choice import get_financial_asset
+from src.get_choice import get_financial_asset, get_candle_time
 
 def main() :
-    print("=======================================")
 
     # 1
     # déterminer le choix de la valeur choisie
-    # déterminer le choix de la bougie : 1 minute / 15 minutes / 1h / 2h / 4h / 1j
+    # déterminer le choix de la bougie
     fa = get_financial_asset()
+    candel_time = get_candle_time()
 
     # 2
     # récupérer les données correspondantes
