@@ -1,4 +1,4 @@
-# 🕯️ TheNextCandle
+# TheNextCandle
 
 A machine learning model that predicts the direction of the next financial candlestick using a Random Forest classifier tuned with GridSearchCV.
 
