@@ -20,6 +20,6 @@ def predict_next_candle(model, ticker):
     X_last = df.tail(1)
     prediction = model.predict(X_last)[0]
 
-    labels = {1: "High", 0: "Netral", -1: "Low"}
+    labels = {1: "Up", 0: "Neutral", -1: "Down"}
     print(f"Prediction of the next candle : {labels[prediction]}")
     return prediction

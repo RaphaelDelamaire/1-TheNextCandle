@@ -13,10 +13,10 @@ def evaluate(model, X_test, y_test):
 
     print("===============================================")
     print("Performances : ")
-    print(classification_report(y_test, y_pred, target_names=["Baisse", "Neutre", "Hausse"], zero_division=0))
+    print(classification_report(y_test, y_pred, target_names=["Down", "Neutral", "Up"], zero_division=0))
     
     print("===============================================")
-    print("Matrice de confusion : ")
+    print("Confusion matrix : ")
     print(confusion_matrix(y_test, y_pred))
 
 def show_feature_importance(model, feature_names):
