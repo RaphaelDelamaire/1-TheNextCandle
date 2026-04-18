@@ -70,7 +70,7 @@ def get_dataframe(ticker, threshold):
 
     df = add_indicators(df)
     df = add_target(df, threshold)
-    df = df.drop(columns=["Open", "High", "Low", "Close"])
+    df = df.drop(columns=["Open", "High", "Low", "Close", "Volume"])
     df = df.dropna()
 
     return df

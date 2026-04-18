@@ -18,6 +18,7 @@ def main() :
     df = get_dataframe(ticker, THRESHOLD)
     
     print(df[len(df)-10:len(df)])
+    print(df.columns)
 
     # 3
 
