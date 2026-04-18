@@ -1,23 +1,22 @@
-from config import THRESHOLD, DEFAULT_PERIOD, DEFAULT_INTERVAL
-
+from config import THRESHOLD
 from src.get_inputs import get_financial_asset
 from src.data.loader import get_dataframe
+from src.model.train import tune_model
+from src.model.evaluate import evaluate, show_feature_importance
+from src.model.predict import predict_next_candle
 
 
-def main() :
-
-    # 1 - déterminer les choix d'entrée (valeur et temps de la bougie)
+def main():
     ticker = get_financial_asset()
+    df = get_dataframe(ticker, THRESHOLD)
 
-    # 2 - récupérer les données correspondantes dans un dataframe avec les indicateurs
-    df = get_dataframe(ticker, THRESHOLD, DEFAULT_PERIOD, DEFAULT_INTERVAL)
+    model, X_test, y_test = tune_model(df)
+    evaluate(model, X_test, y_test)
     
-    print(df[len(df)-10:len(df)])
-    print(df.columns)
+    # show_feature_importance(model, df.drop(columns=["target"]).columns)
 
-    # 3
+    predict_next_candle(model, ticker)
 
-    pass
 
 if __name__ == "__main__":
     main()

@@ -1,27 +1,9 @@
 import yfinance as yf
 import pandas as pd
 
-from src.data.indicators import add_return, add_return_lag1, add_ma_ratio_5_10, add_volatility, add_momentum_3, add_rsi, add_volume_norm, add_hl_range, add_oc_change
+from config import DEFAULT_PERIOD, DEFAULT_INTERVAL
 
-def add_indicators(df) :
-    """
-    Entrée : Dataframe 
-    Sortie : Dataframe avec ajouté : return / return_lag1 / ma_ratio_5_10 / volatility / momentum_3 / rsi / volume_norm / hl_range / oc_change
-    """
-
-    df = df.copy()
-
-    df = add_return(df)
-    df = add_return_lag1(df)
-    df = add_ma_ratio_5_10(df)
-    df = add_volatility(df)
-    df = add_momentum_3(df)
-    df = add_rsi(df)
-    df = add_volume_norm(df)
-    df = add_hl_range(df)
-    df = add_oc_change(df)
-
-    return df
+from src.data.indicators import add_indicators
 
 def add_target(df, threshold):
     """
@@ -38,7 +20,7 @@ def add_target(df, threshold):
 
     return df
 
-def get_dataframe(ticker, threshold, period="2y", interval="1h"):
+def get_dataframe(ticker, threshold, period=DEFAULT_PERIOD, interval=DEFAULT_INTERVAL):
     """
     Entrée : ticker 
     Sortie : Dataframe 2 ans avec : return / return_lag1 / ma_ratio_5_10 / volatility / momentum_3 / rsi / volume_norm / hl_range / oc_change
@@ -54,6 +36,21 @@ def get_dataframe(ticker, threshold, period="2y", interval="1h"):
 
     df = add_indicators(df)
     df = add_target(df, threshold)
+    df = df.drop(columns=["Open", "High", "Low", "Close", "Volume"])
+
+    df = df.dropna()
+
+    return df
+
+def get_dataframe_for_predict(ticker, period=DEFAULT_PERIOD, interval=DEFAULT_INTERVAL):
+    """
+    Similaire à get_dataframe mais sans la colonne target pour la prédiction de la dernière bougie
+    """
+    df = yf.download(ticker, period=period, interval=interval)
+    df = df.sort_index()
+    if isinstance(df.columns, pd.MultiIndex): df.columns = df.columns.get_level_values(0)
+
+    df = add_indicators(df)
     df = df.drop(columns=["Open", "High", "Low", "Close", "Volume"])
     df = df.dropna()
 
