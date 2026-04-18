@@ -9,8 +9,8 @@ def get_financial_asset():
     fa_found = False
     while not fa_found :
         print("===============================================")
-        answ = str(input("Enter the ticker of the financial asset : "))
-        ticker = yf.Ticker(answ)
+        ticker_input  = str(input("Enter the ticker of the financial asset : ")).strip().upper()
+        ticker = yf.Ticker(ticker_input )
         info = ticker.info
         name = info.get("longName") or info.get("shortName")
         
@@ -18,4 +18,4 @@ def get_financial_asset():
         else:  print("Financial value not found. Please try again.")
 
     print(f'You choose "{name}" !')
-    return answ
+    return ticker_input 

@@ -1,12 +1,7 @@
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import sklearn
+from config import THRESHOLD, DEFAULT_PERIOD, DEFAULT_INTERVAL
 
 from src.get_inputs import get_financial_asset
-from src.get_data import get_dataframe
-
-THRESHOLD = 0.001
+from src.data.loader import get_dataframe
 
 
 def main() :
@@ -15,7 +10,7 @@ def main() :
     ticker = get_financial_asset()
 
     # 2 - récupérer les données correspondantes dans un dataframe avec les indicateurs
-    df = get_dataframe(ticker, THRESHOLD)
+    df = get_dataframe(ticker, THRESHOLD, DEFAULT_PERIOD, DEFAULT_INTERVAL)
     
     print(df[len(df)-10:len(df)])
     print(df.columns)
